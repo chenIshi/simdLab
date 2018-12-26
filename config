@@ -1,0 +1,48 @@
+#!/bin/bash
+CONFIG_OUT_LOCAT="./config_log"
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -isa|--target-isa)
+    TARGET_ISA="$2"
+    shift # past signal argument
+    shift # past corresponding value
+    ;;
+    -tc|--testcase)
+    TESTCASE="$2"
+    shift # past signal argument
+    shift # past corresponding value
+    ;;
+    *) # unknown option
+    POSITIONAL+=($1)
+    shift # past unknown argument
+    ;;
+esac
+done
+
+# set default target isa to be intel x86 SSE
+if [[ ! -e ${TARGET_ISA} ]]; then
+    TARGET_ISA="SSE"
+fi
+
+# set default testcase to the first corresponding test case
+if [[ ! -e ${TESTCASE} ]]; then
+    TESTCASE="0"
+fi
+
+if [ -f ${CONFIG_OUT_LOCAT} ]; then
+    rm ${CONFIG_OUT_LOCAT}
+fi
+
+set -- "${POSTITIONAL[@]}" # restore position
+echo TARGET_ISA = "${TARGET_ISA}" >> ${CONFIG_OUT_LOCAT}
+echo TESTCASE = "${TESTCASE}" >> ${CONFIG_OUT_LOCAT}
+
+if [[ -n $1 ]]; then
+    echo "Last Line of File Specified as Non-opt/Last Argument:"
+    tail -1 $1
+fi
