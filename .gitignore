@@ -1,2 +1,11 @@
 # config settings
 config_log
+
+# random test data
+random_fixed_array.txt
+random_float_array.txt
+
+# executable file
+data_producer
+fixed_consumer
+float_consumer

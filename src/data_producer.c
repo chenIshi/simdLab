@@ -55,7 +55,7 @@ int main() {
         return err;
     }
 
-    err = gen_rand_Array(item_size, item_type, float_item, fixed_item);
+    err = produce_item(item_size, item_type, float_item, fixed_item);
 
     FILE *float_item_storage = fopen(FLOAT_STORAGE, "w");
     if (!float_item_storage) {
